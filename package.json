@@ -1,0 +1,33 @@
+{
+  "name": "openhims",
+  "version": "1.0.0",
+  "private": false,
+  "scripts":
+  {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies":
+  {
+    "@fontsource-variable/raleway": "^5.0.17",
+    "@fontsource/lato": "^5.0.18",
+
+    "@material-tailwind/react": "^2.1.9",
+    "next": "14.1.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "sharp": "^0.33.2"
+  },
+  "devDependencies":
+  {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "prisma": "^5.10.2",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}
