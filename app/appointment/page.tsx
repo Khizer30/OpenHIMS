@@ -5,8 +5,8 @@ import Form from "@components/Forms/Appointment";
 // Metadata
 export const metadata: Metadata =
 {
-  title: "Clinic Run | Appointment",
-  keywords: ["Clinic Run", "Appointment"]
+  title: "OpenHIMS | New Appointment",
+  keywords: ["OpenHIMS", "New Appointment"]
 };
 
 // Page
@@ -14,8 +14,8 @@ export default function Page(): JSX.Element
 {
   return (
     <>
-      <div className=" p-6 flex flex-col justify-center items-center">
-        <p className=" m-4 md:m-6 font-primary font-medium text-3xl md:text-5xl text-grey"> New Appointment </p>
+      <div className=" w-full p-4 flex flex-col justify-center items-center">
+        <p className=" m-4 font-primary font-medium text-5xl text-grey"> New Appointment </p>
         <Form />
       </div>
     </>

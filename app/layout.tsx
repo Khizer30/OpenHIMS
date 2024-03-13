@@ -2,16 +2,16 @@ import { type Metadata } from "next";
 import "@fontsource-variable/raleway";
 import "@fontsource/lato";
 //
-import Navbar from "@components/Navbar";
+import Sidebar from "@components/Sidebar";
 import { type Children } from "@lib/Interface";
 import "./globals.css";
 
 // Metadata
 export const metadata: Metadata =
 {
-  title: "Clinic Run",
-  keywords: ["Clinic Run"],
-  description: "Clnic Run is an open-source HIMS",
+  title: "OpenHIMS",
+  keywords: ["OpenHIMS"],
+  description: "OpenHIMS is an open-source HIMS",
   authors:
   {
     name: "Syed Muhammad Khizer",
@@ -35,8 +35,8 @@ export default function Layout({ children }: Children): JSX.Element
   return (
     <>
       <html lang="en-PK">
-        <body>
-          <Navbar />
+        <body className=" flex">
+          <Sidebar />
           { children }
         </body>
       </html>

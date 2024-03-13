@@ -12,6 +12,7 @@ interface Appointment
   id: number;
   date: string;
   doctor: string;
+  type: string;
   fees: number;
 
   name: string;
