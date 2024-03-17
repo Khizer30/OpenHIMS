@@ -31,7 +31,7 @@ export default function Form(): JSX.Element
         target="_self"
         encType="application/x-www-form-urlencoded"
         autoComplete="off"
-        className=" w-3/4 md:w-1/2"
+        className=" w-1/2"
         onSubmit={ handleSubmit }
       >
 
@@ -46,7 +46,6 @@ export default function Form(): JSX.Element
             autoFocus
             value={ inputs.id || "" }
             onChange={ handleChange }
-            crossOrigin={ undefined }
           />
         </div>
 
@@ -60,22 +59,22 @@ export default function Form(): JSX.Element
             color="blue"
             value={ inputs.date }
             onChange={ handleChange }
-            crossOrigin={ undefined }
           />
         </div>
 
         <div className=" my-4">
           <Select
-            name="doctor"
-            label="Doctor"
-            placeholder="Doctor"
+            name="type"
+            label="Type"
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.doctor }
-            onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, doctor: val || "" })) }
+            value={ inputs.type }
+            onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, type: val || "" })) }
           >
-            <Option value="Asad Ali Owaisi"> Dr. Asad Ali Owaisi </Option>
+            <Option value="Consultation"> Consultation </Option>
+            <Option value="Procedure"> Procedure </Option>
+            <Option value="ECG"> ECG </Option>
           </Select>
         </div>
 
@@ -89,8 +88,22 @@ export default function Form(): JSX.Element
             color="blue"
             value={ inputs.fees || "" }
             onChange={ handleChange }
-            crossOrigin={ undefined }
           />
+        </div>
+
+        <div className=" my-4">
+          <Select
+            name="doctor"
+            label="Doctor"
+            variant="outlined"
+            size="lg"
+            color="blue"
+            value={ inputs.doctor }
+            onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, doctor: val || "" })) }
+          >
+            <Option value="None"> None </Option>
+            <Option value="Asad Ali Owaisi"> Dr. Asad Ali Owaisi </Option>
+          </Select>
         </div>
 
         <br />
@@ -105,7 +118,6 @@ export default function Form(): JSX.Element
             color="blue"
             value={ inputs.name }
             onChange={ handleChange }
-            crossOrigin={ undefined }
           />
         </div>
 
@@ -119,7 +131,6 @@ export default function Form(): JSX.Element
             color="blue"
             value={ inputs.age || "" }
             onChange={ handleChange }
-            crossOrigin={ undefined }
           />
         </div>
 
@@ -127,15 +138,14 @@ export default function Form(): JSX.Element
           <Select
             name="gender"
             label="Patient's Gender"
-            placeholder="Patient's Gender"
             variant="outlined"
             size="lg"
             color="blue"
             value={ inputs.gender }
             onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, gender: val || "" })) }
           >
-            <Option value="M"> Male </Option>
-            <Option value="F"> Female </Option>
+            <Option value="Male"> Male </Option>
+            <Option value="Female"> Female </Option>
           </Select>
         </div>
 
@@ -149,14 +159,12 @@ export default function Form(): JSX.Element
             color="blue"
             value={ inputs.phone }
             onChange={ handleChange }
-            crossOrigin={ undefined }
           />
         </div>
 
         <div className=" my-4 flex justify-center items-center">
           <Button
             type="submit"
-            placeholder=""
             variant="gradient"
             size="lg"
             color="blue"
