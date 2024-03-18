@@ -11,9 +11,9 @@ interface Appointment
 {
   id: number;
   date: string;
-  doctor: string;
   type: string;
   fees: number;
+  doctor: string;
 
   name: string;
   age: number;

@@ -11,17 +11,34 @@ export default function Form(): JSX.Element
   const [inputs, setInputs] = useState<Appointment>(appointmentObj);
 
   // Handle Submit
-  function handleSubmit(e: FormEvent<HTMLFormElement>)
+  async function handleSubmit(e: FormEvent<HTMLFormElement>)
   {
     e.preventDefault();
 
-    console.log(inputs);
+    await fetch("/api/print",
+      {
+        mode: "same-origin",
+        cache: "no-cache",
+        method: "POST",
+        headers:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(inputs)
+      });
   }
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement>)
   {
-    setInputs((x: Appointment) => ({ ...x, [e.target.name]: e.target.value }));
+    if (e.target.name === "name")
+    {
+      setInputs((x: Appointment) => ({ ...x, name: e.target.value.toUpperCase() }));
+    }
+    else
+    {
+      setInputs((x: Appointment) => ({ ...x, [e.target.name]: e.target.value }));
+    }
   }
 
   return (

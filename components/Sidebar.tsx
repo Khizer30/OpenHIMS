@@ -16,6 +16,7 @@ export default function Sidebar()
           src={ logo }
           alt="The Owaisi's Clinic"
           draggable="false"
+          priority
           className=" w-20 h-20"
         />
       </div>
