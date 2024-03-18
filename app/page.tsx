@@ -1,5 +1,6 @@
 import Image from "next/image";
 //
+import Sidebar from "@components/Sidebar";
 import logo from "@images/clinic.webp";
 
 // Page
@@ -7,6 +8,7 @@ export default function Page(): JSX.Element
 {
   return (
     <>
+      <Sidebar />
       <div className=" w-full p-4 flex flex-col justify-center items-center">
         <Image
           src={ logo }

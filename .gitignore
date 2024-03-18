@@ -18,5 +18,8 @@ build
 *.tsbuildinfo
 next-env.d.ts
 
+# Database
+*.db3
+
 # Extra
 .Extra

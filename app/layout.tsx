@@ -2,7 +2,6 @@ import { type Metadata } from "next";
 import "@fontsource-variable/raleway";
 import "@fontsource/lato";
 //
-import Sidebar from "@components/Sidebar";
 import { type Children } from "@lib/Interface";
 import "./globals.css";
 
@@ -36,7 +35,6 @@ export default function Layout({ children }: Children): JSX.Element
     <>
       <html lang="en-PK">
         <body className=" flex">
-          <Sidebar />
           { children }
         </body>
       </html>
