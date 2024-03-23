@@ -1,40 +1,40 @@
-import { type Appointment, type Patient } from "@prisma/client";
+import { type Appointment } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
-import { type AppointmentType, type PatientType } from "@lib/Interface";
+import { type PatientType, type AppointmentType } from "@lib/Interface";
 
 // Add Appointment
-async function addAppointment(x: AppointmentType, y: PatientType): Promise<number>
+async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
 {
   let appointment: Appointment | null = null;
 
   try
   {
     await prisma.patient.upsert({
-      where: { phone: y.phone },
+      where: { phone: x.phone },
       update:
       {
-        name: y.name,
-        age: +y.age,
-        gender: y.gender
+        name: x.name,
+        age: +x.age,
+        gender: x.gender
       },
       create:
       {
-        name: y.name,
-        age: +y.age,
-        gender: y.gender,
-        phone: y.phone
+        name: x.name,
+        age: +x.age,
+        gender: x.gender,
+        phone: x.phone
       }
     });
 
     appointment = await prisma.appointment.create({
       data:
       {
-        date: new Date(x.date),
-        type: x.type,
-        fees: +x.fees,
-        doctor: x.doctor,
-        patientPhone: y.phone
+        date: new Date(y.date),
+        service: y.service,
+        charges: +y.charges,
+        doctor: y.doctor,
+        patientPhone: x.phone
       }
     });
   }

@@ -6,5 +6,5 @@ import { type Children } from "@lib/Interface";
 // MT
 export default function MT({ children }: Children): JSX.Element
 {
-  return <ThemeProvider> <> { children } </> </ThemeProvider>;
+  return <ThemeProvider> { children } </ThemeProvider>;
 }

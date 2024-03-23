@@ -1,17 +1,5 @@
 //
-import prisma from "@lib/prisma";
-import { type AppointmentType, type PatientType } from "@lib/Interface";
-
-// Appointment Object
-const appointmentObj: AppointmentType =
-{
-  id: 0,
-  date: new Date().toISOString().slice(0, 10),
-  type: "",
-  fees: 0,
-  doctor: "",
-  patientPhone: ""
-};
+import { type PatientType, type AppointmentType } from "@lib/Interface";
 
 // Patient Object
 const patientObj: PatientType =
@@ -23,6 +11,15 @@ const patientObj: PatientType =
   appointments: []
 };
 
+// Appointment Object
+const appointmentObj: AppointmentType =
+{
+  id: 0,
+  date: new Date().toISOString().slice(0, 10),
+  service: "",
+  charges: 0,
+  doctor: "",
+  patientPhone: ""
+};
 
-
-export { appointmentObj, patientObj };
+export { patientObj, appointmentObj };

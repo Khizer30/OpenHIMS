@@ -1,15 +1,22 @@
 import puppeteer, { type Browser, type Page } from "puppeteer";
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 //
 import { addAppointment } from "@lib/db";
-import { type AppointmentType, type PatientType } from "@lib/Interface";
+import { type PatientType, type AppointmentType } from "@lib/Interface";
+
+// JSON
+interface JSON
+{
+  patient: PatientType;
+  appointment: AppointmentType;
+}
 
 // Print
 export async function POST(req: NextRequest): Promise<NextResponse<string>>
 {
-  const data: { appointment: AppointmentType, patient: PatientType; } = await req.json();
+  const { patient, appointment }: JSON = await req.json();
 
-  await addAppointment(data.appointment, data.patient);
+  const appointmentID: number = await addAppointment(patient, appointment);
   /*
     const browser: Browser = await puppeteer.launch();
     const page: Page = await browser.newPage();
@@ -26,7 +33,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<string>>
   
     await browser.close();
   */
-  console.log(data);
+  console.log(appointmentID);
 
   return NextResponse.json("");
 }

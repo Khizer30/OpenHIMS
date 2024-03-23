@@ -65,7 +65,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ appointment.type }
+            value={ appointment.service }
             onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, type: val || "" })) }
           >
             <Option value="Consultation"> Consultation </Option>
@@ -95,7 +95,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ appointment.fees || "" }
+            value={ appointment.charges || "" }
             onChange={ handleChange }
           />
         </div>
