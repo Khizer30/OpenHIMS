@@ -6,19 +6,25 @@ interface Children
   children: ReactNode;
 }
 
-// Appointment
-interface Appointment
+// Appointment Type
+interface AppointmentType
 {
   id: number;
   date: string;
   type: string;
   fees: number;
   doctor: string;
+  patientPhone: string;
+}
 
+// Patient Type
+interface PatientType
+{
   name: string;
   age: number;
   gender: string;
   phone: string;
+  appointments: AppointmentType[];
 }
 
-export type { Children, Appointment };
+export type { Children, AppointmentType, PatientType };

@@ -2,13 +2,14 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Input, Select, Option, Button } from "@material-tailwind/react";
 //
-import { appointmentObj } from "@lib/lib";
-import { type Appointment } from "@lib/Interface";
+import { appointmentObj, patientObj } from "@lib/lib";
+import { type AppointmentType, type PatientType } from "@lib/Interface";
 
 // Form
 export default function Form(): JSX.Element
 {
-  const [inputs, setInputs] = useState<Appointment>(appointmentObj);
+  const [appointment, setAppointment] = useState<AppointmentType>(appointmentObj);
+  const [patient, setPatient] = useState<PatientType>(patientObj);
 
   // Handle Submit
   async function handleSubmit(e: FormEvent<HTMLFormElement>)
@@ -24,20 +25,25 @@ export default function Form(): JSX.Element
         {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(inputs)
+        body: JSON.stringify({ appointment: appointment, patient: patient })
       });
   }
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement>)
   {
-    if (e.target.name === "name")
+    if (e.target.name === "date" || e.target.name === "type"
+      || e.target.name === "fees" || e.target.name === "doctor")
     {
-      setInputs((x: Appointment) => ({ ...x, name: e.target.value.toUpperCase() }));
+      setAppointment((x: AppointmentType) => ({ ...x, [e.target.name]: e.target.value }));
+    }
+    else if (e.target.name === "name")
+    {
+      setPatient((x: PatientType) => ({ ...x, name: e.target.value.toUpperCase() }));
     }
     else
     {
-      setInputs((x: Appointment) => ({ ...x, [e.target.name]: e.target.value }));
+      setPatient((x: PatientType) => ({ ...x, [e.target.name]: e.target.value }));
     }
   }
 
@@ -53,17 +59,19 @@ export default function Form(): JSX.Element
       >
 
         <div className=" my-4">
-          <Input
-            name="id"
-            type="number"
-            label="Appointment No."
+          <Select
+            name="type"
+            label="Type"
             variant="outlined"
             size="lg"
             color="blue"
-            autoFocus
-            value={ inputs.id || "" }
-            onChange={ handleChange }
-          />
+            value={ appointment.type }
+            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, type: val || "" })) }
+          >
+            <Option value="Consultation"> Consultation </Option>
+            <Option value="Procedure"> Procedure </Option>
+            <Option value="ECG"> ECG </Option>
+          </Select>
         </div>
 
         <div className=" my-4">
@@ -74,25 +82,9 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.date }
+            value={ appointment.date }
             onChange={ handleChange }
           />
-        </div>
-
-        <div className=" my-4">
-          <Select
-            name="type"
-            label="Type"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ inputs.type }
-            onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, type: val || "" })) }
-          >
-            <Option value="Consultation"> Consultation </Option>
-            <Option value="Procedure"> Procedure </Option>
-            <Option value="ECG"> ECG </Option>
-          </Select>
         </div>
 
         <div className=" my-4">
@@ -103,7 +95,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.fees || "" }
+            value={ appointment.fees || "" }
             onChange={ handleChange }
           />
         </div>
@@ -115,8 +107,8 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.doctor }
-            onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, doctor: val || "" })) }
+            value={ appointment.doctor }
+            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, doctor: val || "" })) }
           >
             <Option value="None"> None </Option>
             <Option value="Asad Ali Owaisi"> Dr. Asad Ali Owaisi </Option>
@@ -133,7 +125,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.name }
+            value={ patient.name }
             onChange={ handleChange }
           />
         </div>
@@ -146,7 +138,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.age || "" }
+            value={ patient.age || "" }
             onChange={ handleChange }
           />
         </div>
@@ -158,8 +150,8 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.gender }
-            onChange={ (val: string | undefined) => setInputs((x: Appointment) => ({ ...x, gender: val || "" })) }
+            value={ patient.gender }
+            onChange={ (val: string | undefined) => setPatient((x: PatientType) => ({ ...x, gender: val || "" })) }
           >
             <Option value="Male"> Male </Option>
             <Option value="Female"> Female </Option>
@@ -174,7 +166,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
-            value={ inputs.phone }
+            value={ patient.phone }
             onChange={ handleChange }
           />
         </div>

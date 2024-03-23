@@ -2,7 +2,7 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Select, Option, Button } from "@material-tailwind/react";
 //
-import { type Appointment } from "@lib/Interface";
+import { type AppointmentType } from "@lib/Interface";
 
 // Form
 export default function Form(): JSX.Element
