@@ -27,4 +27,11 @@ interface AppointmentType
   patientPhone: string;
 }
 
-export type { Children, PatientType, AppointmentType };
+// JSON
+interface JSON
+{
+  patient: PatientType;
+  appointment: AppointmentType;
+}
+
+export type { Children, PatientType, AppointmentType, JSON };

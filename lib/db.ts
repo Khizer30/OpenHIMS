@@ -1,7 +1,8 @@
 import { type Appointment } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
-import { type PatientType, type AppointmentType } from "@lib/Interface";
+import { appointmentObj, patientObj } from "@lib/lib";
+import { type PatientType, type AppointmentType, type JSON } from "@lib/Interface";
 
 // Add Appointment
 async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
@@ -50,4 +51,42 @@ async function addAppointment(x: PatientType, y: AppointmentType): Promise<numbe
   return appointment ? appointment.id : 0;
 }
 
-export { addAppointment };
+// Get Appointment
+async function getAppointment(id: number): Promise<JSON>
+{
+  let { patient, appointment }: JSON = { patient: patientObj, appointment: appointmentObj };
+
+  try
+  {
+    const data = await prisma.appointment.findUnique({
+      where: { id: id },
+      include: { Patient: true }
+    });
+
+    if (data)
+    {
+      patient = { ...data.Patient, appointments: [] };
+      appointment =
+      {
+        id: data.id,
+        date: data.date.toISOString(),
+        service: data.service,
+        charges: data.charges,
+        doctor: data.doctor,
+        patientPhone: data.patientPhone
+      };
+    }
+  }
+  catch (e: unknown)
+  {
+    console.log(e);
+  }
+  finally
+  {
+    await prisma.$disconnect();
+  }
+
+  return { patient, appointment };
+}
+
+export { addAppointment, getAppointment };

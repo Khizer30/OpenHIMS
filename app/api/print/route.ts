@@ -2,14 +2,7 @@ import puppeteer, { type Browser, type Page } from "puppeteer";
 import { NextResponse, type NextRequest } from "next/server";
 //
 import { addAppointment } from "@lib/db";
-import { type PatientType, type AppointmentType } from "@lib/Interface";
-
-// JSON
-interface JSON
-{
-  patient: PatientType;
-  appointment: AppointmentType;
-}
+import { type JSON } from "@lib/Interface";
 
 // Print
 export async function POST(req: NextRequest): Promise<NextResponse<string>>
