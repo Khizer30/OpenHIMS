@@ -22,4 +22,59 @@ const appointmentObj: AppointmentType =
   patientPhone: ""
 };
 
-export { patientObj, appointmentObj };
+// Services
+const services: string[] = ["Consultation", "Nebulizing", "Injection", "ECG", "Acupuncture"];
+
+// Check Number
+function checkNumber(y: string): boolean
+{
+  if (+y >= 0 && +y <= 100000 && y !== "")
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+// Check String
+function checkString(y: string): boolean
+{
+  if (y !== "" && y.length <= 100)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+// Validate Patient
+function validatePatient(x: PatientType): boolean
+{
+  if (checkString(x.name) && checkNumber(x.age.toString()) && checkString(x.gender) && checkString(x.phone))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+// Validate Appointment
+function validateAppointment(x: AppointmentType): boolean
+{
+  if (checkString(x.date) && checkString(x.service) && checkNumber(x.charges.toString()) && checkString(x.doctor))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+export { patientObj, appointmentObj, services, validatePatient, validateAppointment };

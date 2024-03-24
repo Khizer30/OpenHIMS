@@ -2,49 +2,63 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Input, Select, Option, Button } from "@material-tailwind/react";
 //
-import { appointmentObj, patientObj } from "@lib/lib";
-import { type AppointmentType, type PatientType } from "@lib/Interface";
+import { patientObj, appointmentObj, services, validatePatient, validateAppointment } from "@lib/lib";
+import { type PatientType, type AppointmentType } from "@lib/Interface";
 
 // Form
 export default function Form(): JSX.Element
 {
-  const [appointment, setAppointment] = useState<AppointmentType>(appointmentObj);
   const [patient, setPatient] = useState<PatientType>(patientObj);
+  const [appointment, setAppointment] = useState<AppointmentType>(appointmentObj);
 
   // Handle Submit
-  async function handleSubmit(e: FormEvent<HTMLFormElement>)
+  async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void>
   {
     e.preventDefault();
 
-    await fetch("/api/print",
-      {
-        mode: "same-origin",
-        cache: "no-cache",
-        method: "POST",
-        headers:
+    if (validatePatient(patient) && validateAppointment(appointment))
+    {
+      await fetch("/api/print",
         {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ appointment: appointment, patient: patient })
-      });
-  }
-
-  // Handle Change
-  function handleChange(e: ChangeEvent<HTMLInputElement>)
-  {
-    if (e.target.name === "date" || e.target.name === "type"
-      || e.target.name === "fees" || e.target.name === "doctor")
-    {
-      setAppointment((x: AppointmentType) => ({ ...x, [e.target.name]: e.target.value }));
-    }
-    else if (e.target.name === "name")
-    {
-      setPatient((x: PatientType) => ({ ...x, name: e.target.value.toUpperCase() }));
+          mode: "same-origin",
+          cache: "no-cache",
+          method: "POST",
+          headers:
+          {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ patient: patient, appointment: appointment })
+        });
     }
     else
     {
+      alert("Please, Complete The Form!");
+    }
+  }
+
+  // Handle Change
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void
+  {
+    if (e.target.name === "name")
+    {
+      setPatient((x: PatientType) => ({ ...x, name: e.target.value.toUpperCase() }));
+    }
+    else if (e.target.name === "age" || e.target.name === "phone")
+    {
       setPatient((x: PatientType) => ({ ...x, [e.target.name]: e.target.value }));
     }
+    else
+    {
+      setAppointment((x: AppointmentType) => ({ ...x, [e.target.name]: e.target.value }));
+    }
+  }
+
+  // Option Mapper
+  function optionMapper(x: string): JSX.Element
+  {
+    return (
+      <Option value={ x } key={ x }> { x } </Option>
+    );
   }
 
   return (
@@ -59,65 +73,6 @@ export default function Form(): JSX.Element
       >
 
         <div className=" my-4">
-          <Select
-            name="type"
-            label="Type"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ appointment.service }
-            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, type: val || "" })) }
-          >
-            <Option value="Consultation"> Consultation </Option>
-            <Option value="Procedure"> Procedure </Option>
-            <Option value="ECG"> ECG </Option>
-          </Select>
-        </div>
-
-        <div className=" my-4">
-          <Input
-            name="date"
-            type="date"
-            label="Date"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ appointment.date }
-            onChange={ handleChange }
-          />
-        </div>
-
-        <div className=" my-4">
-          <Input
-            name="fees"
-            type="number"
-            label="Fees"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ appointment.charges || "" }
-            onChange={ handleChange }
-          />
-        </div>
-
-        <div className=" my-4">
-          <Select
-            name="doctor"
-            label="Doctor"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ appointment.doctor }
-            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, doctor: val || "" })) }
-          >
-            <Option value="None"> None </Option>
-            <Option value="Asad Ali Owaisi"> Dr. Asad Ali Owaisi </Option>
-          </Select>
-        </div>
-
-        <br />
-
-        <div className=" my-4">
           <Input
             name="name"
             type="text"
@@ -125,6 +80,7 @@ export default function Form(): JSX.Element
             variant="outlined"
             size="lg"
             color="blue"
+            autoFocus
             value={ patient.name }
             onChange={ handleChange }
           />
@@ -169,6 +125,63 @@ export default function Form(): JSX.Element
             value={ patient.phone }
             onChange={ handleChange }
           />
+        </div>
+
+        <br />
+
+        <div className=" my-4">
+          <Input
+            name="date"
+            type="date"
+            label="Date"
+            variant="outlined"
+            size="lg"
+            color="blue"
+            value={ appointment.date }
+            onChange={ handleChange }
+          />
+        </div>
+
+        <div className=" my-4">
+          <Select
+            name="service"
+            label="Service"
+            variant="outlined"
+            size="lg"
+            color="blue"
+            value={ appointment.service }
+            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, service: val || "" })) }
+          >
+            { services.map(optionMapper) }
+          </Select>
+        </div>
+
+        <div className=" my-4">
+          <Input
+            name="charges"
+            type="number"
+            label="Charges"
+            variant="outlined"
+            size="lg"
+            color="blue"
+            value={ appointment.charges || "" }
+            onChange={ handleChange }
+          />
+        </div>
+
+        <div className=" my-4">
+          <Select
+            name="doctor"
+            label="Doctor"
+            variant="outlined"
+            size="lg"
+            color="blue"
+            value={ appointment.doctor }
+            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, doctor: val || "" })) }
+          >
+            <Option value="NULL"> None </Option>
+            <Option value="Asad Ali Owaisi"> Dr. Asad Ali Owaisi </Option>
+          </Select>
         </div>
 
         <div className=" my-4 flex justify-center items-center">

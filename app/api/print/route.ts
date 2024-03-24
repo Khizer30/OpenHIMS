@@ -33,7 +33,6 @@ export async function POST(req: NextRequest): Promise<NextResponse<string>>
   
     await browser.close();
   */
-  console.log(appointmentID);
 
   return NextResponse.json("");
 }
