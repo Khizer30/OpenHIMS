@@ -63,7 +63,7 @@ export default async function Page({ params }: Params): Promise<JSX.Element>
 
         <div className=" w-full my-4 grid grid-cols-7 text-sm text-grey">
           <h6 className={ ` col-span-5 font-primary font-bold ${ (data.appointment.doctor === "None") ? "invisible" : "" }` }> Doctor: <span className=" font-secondary font-normal"> { data.appointment.doctor } </span> </h6>
-          <h6 className=" col-span-2 font-primary font-bold"> Receiver Signature: <span className=" font-secondary font-normal"> __________ </span> </h6>
+          <h6 className=" col-span-2 font-primary font-bold"> Receiver's Signature: <span className=" font-secondary font-normal"> ________ </span> </h6>
         </div>
 
         <hr className=" w-full h-1 my-4 rounded-lg bg-grey" />
