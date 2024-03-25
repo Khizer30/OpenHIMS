@@ -33,8 +33,8 @@ async function addAppointment(x: PatientType, y: AppointmentType): Promise<numbe
       {
         date: new Date(y.date),
         service: y.service,
-        charges: +y.charges,
         doctor: y.doctor,
+        charges: +y.charges,
         patientPhone: x.phone
       }
     });
@@ -71,8 +71,8 @@ async function getAppointment(id: number): Promise<JSON>
         id: data.id,
         date: data.date.toLocaleDateString(),
         service: data.service,
-        charges: data.charges,
         doctor: data.doctor,
+        charges: data.charges,
         patientPhone: data.patientPhone
       };
     }

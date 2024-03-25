@@ -22,8 +22,8 @@ interface AppointmentType
   id: number;
   date: string;
   service: string;
-  charges: number;
   doctor: string;
+  charges: number;
   patientPhone: string;
 }
 

@@ -19,8 +19,8 @@ model Appointment {
   id           Int      @id @default(autoincrement())
   date         DateTime @default(now())
   service      String   @default("")
-  charges      Int      @default(0)
   doctor       String   @default("")
+  charges      Int      @default(0)
   patientPhone String
   Patient      Patient  @relation(fields: [patientPhone], references: [phone])
 }

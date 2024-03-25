@@ -4,21 +4,37 @@ import { type PatientType, type AppointmentType } from "@lib/Interface";
 // Patient Object
 const patientObj: PatientType =
 {
+  /*
   name: "",
   age: 0,
   gender: "",
   phone: "",
+  appointments: []
+  */
+  name: "MUHAMMAD KHIZER",
+  age: 21,
+  gender: "Male",
+  phone: "03045149450",
   appointments: []
 };
 
 // Appointment Object
 const appointmentObj: AppointmentType =
 {
+  /*
   id: 0,
   date: new Date().toISOString().slice(0, 10),
   service: "",
-  charges: 0,
   doctor: "",
+  charges: 0,
+  patientPhone: ""
+  */
+
+  id: 0,
+  date: new Date().toISOString().slice(0, 10),
+  service: "Consultation",
+  doctor: "Dr. Asad Ali Owaisi",
+  charges: 2000,
   patientPhone: ""
 };
 
@@ -70,7 +86,7 @@ function validatePatient(x: PatientType): boolean
 // Validate Appointment
 function validateAppointment(x: AppointmentType): boolean
 {
-  if (checkString(x.date) && checkString(x.service) && checkNumber(x.charges.toString()) && checkString(x.doctor))
+  if (checkString(x.date) && checkString(x.service) && checkString(x.doctor) && checkNumber(x.charges.toString()))
   {
     return true;
   }
