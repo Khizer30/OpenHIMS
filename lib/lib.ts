@@ -25,6 +25,9 @@ const appointmentObj: AppointmentType =
 // Services
 const services: string[] = ["Consultation", "Nebulizing", "Injection", "ECG", "Acupuncture"];
 
+// Doctors
+const doctors: string[] = ["Dr. Asad Ali Owaisi", "None"];
+
 // Check Number
 function checkNumber(y: string): boolean
 {
@@ -77,4 +80,4 @@ function validateAppointment(x: AppointmentType): boolean
   }
 }
 
-export { patientObj, appointmentObj, services, validatePatient, validateAppointment };
+export { patientObj, appointmentObj, doctors, services, validatePatient, validateAppointment };

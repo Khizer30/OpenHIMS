@@ -2,7 +2,7 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Input, Select, Option, Button } from "@material-tailwind/react";
 //
-import { patientObj, appointmentObj, services, validatePatient, validateAppointment } from "@lib/lib";
+import { patientObj, appointmentObj, doctors, services, validatePatient, validateAppointment } from "@lib/lib";
 import { type PatientType, type AppointmentType } from "@lib/Interface";
 
 // Form
@@ -29,6 +29,11 @@ export default function Form(): JSX.Element
           },
           body: JSON.stringify({ patient: patient, appointment: appointment })
         });
+
+      alert("Patient Slip Printed!");
+
+      setPatient(patientObj);
+      setAppointment(appointmentObj);
     }
     else
     {
@@ -157,6 +162,20 @@ export default function Form(): JSX.Element
         </div>
 
         <div className=" my-4">
+          <Select
+            name="doctor"
+            label="Doctor / Referred By"
+            variant="outlined"
+            size="lg"
+            color="blue"
+            value={ appointment.doctor }
+            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, doctor: val || "" })) }
+          >
+            { doctors.map(optionMapper) }
+          </Select>
+        </div>
+
+        <div className=" my-4">
           <Input
             name="charges"
             type="number"
@@ -167,21 +186,6 @@ export default function Form(): JSX.Element
             value={ appointment.charges || "" }
             onChange={ handleChange }
           />
-        </div>
-
-        <div className=" my-4">
-          <Select
-            name="doctor"
-            label="Doctor"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ appointment.doctor }
-            onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, doctor: val || "" })) }
-          >
-            <Option value="NULL"> None </Option>
-            <Option value="Asad Ali Owaisi"> Dr. Asad Ali Owaisi </Option>
-          </Select>
         </div>
 
         <div className=" my-4 flex justify-center items-center">

@@ -69,7 +69,7 @@ async function getAppointment(id: number): Promise<JSON>
       appointment =
       {
         id: data.id,
-        date: data.date.toISOString(),
+        date: data.date.toLocaleDateString(),
         service: data.service,
         charges: data.charges,
         doctor: data.doctor,
