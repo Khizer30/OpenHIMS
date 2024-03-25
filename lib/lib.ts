@@ -4,37 +4,21 @@ import { type PatientType, type AppointmentType } from "@lib/Interface";
 // Patient Object
 const patientObj: PatientType =
 {
-  /*
   name: "",
   age: 0,
   gender: "",
   phone: "",
-  appointments: []
-  */
-  name: "MUHAMMAD KHIZER",
-  age: 21,
-  gender: "Male",
-  phone: "03045149450",
   appointments: []
 };
 
 // Appointment Object
 const appointmentObj: AppointmentType =
 {
-  /*
   id: 0,
   date: new Date().toISOString().slice(0, 10),
   service: "",
   doctor: "",
   charges: 0,
-  patientPhone: ""
-  */
-
-  id: 0,
-  date: new Date().toISOString().slice(0, 10),
-  service: "Consultation",
-  doctor: "Dr. Asad Ali Owaisi",
-  charges: 2000,
   patientPhone: ""
 };
 
