@@ -5,7 +5,7 @@ import { addAppointment } from "@lib/db";
 import { type JSON } from "@lib/Interface";
 
 // Print
-export async function POST(req: NextRequest): Promise<NextResponse<string>>
+export async function POST(req: NextRequest): Promise<NextResponse<Blob>>
 {
   const { patient, appointment }: JSON = await req.json();
   const appointmentID: number = await addAppointment(patient, appointment);
@@ -16,14 +16,18 @@ export async function POST(req: NextRequest): Promise<NextResponse<string>>
 
   await page.goto(url, { waitUntil: "networkidle0" });
   await page.emulateMediaType("screen");
-  await page.pdf({
+  const pdfBuffer: Buffer = await page.pdf({
     path: `${ process.env.OUTDIR }/${ patient.name }.pdf`,
     margin: { top: "50px", right: "50px", bottom: "50px", left: "50px" },
     printBackground: true,
     format: "A4"
   });
+  const pdf: Blob = new Blob([pdfBuffer.buffer]);
 
   await browser.close();
 
-  return NextResponse.json("");
+  const response: NextResponse<Blob> = new NextResponse(pdf);
+  response.headers.set("Content-Type", "application/pdf");
+
+  return response;
 }

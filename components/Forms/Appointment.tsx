@@ -18,7 +18,7 @@ export default function Form(): JSX.Element
 
     if (validatePatient(patient) && validateAppointment(appointment))
     {
-      await fetch("/api/print",
+      const res: Response = await fetch("/api/print",
         {
           mode: "same-origin",
           cache: "no-cache",
@@ -30,7 +30,8 @@ export default function Form(): JSX.Element
           body: JSON.stringify({ patient: patient, appointment: appointment })
         });
 
-      alert("Patient Slip Printed!");
+      const response: Blob = await res.blob();
+      generatePDF(response);
 
       setPatient(patientObj);
       setAppointment(appointmentObj);
@@ -38,6 +39,21 @@ export default function Form(): JSX.Element
     else
     {
       alert("Please, Complete The Form!");
+    }
+  }
+
+  // Generate PDF
+  function generatePDF(x: Blob): void
+  {
+    const pdfURL: string = URL.createObjectURL(x);
+    const pdfWindow: Window | null = window.open(pdfURL);
+
+    if (pdfWindow)
+    {
+      pdfWindow.onload = () =>
+      {
+        pdfWindow.print();
+      };
     }
   }
 
