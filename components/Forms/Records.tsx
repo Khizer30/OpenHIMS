@@ -1,27 +1,25 @@
 "use client";
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { Select, Option, Button } from "@material-tailwind/react";
+import { Input, Button } from "@material-tailwind/react";
 //
-import { type AppointmentType } from "@lib/Interface";
+import { recordsObj } from "@lib/lib";
+import { type RecordsType } from "@lib/Interface";
 
 // Form
 export default function Form(): JSX.Element
 {
-  const [input, setInput] = useState<string>("");
-  const [dates, setDates] = useState<string[]>(["02/03/2024", "30/11/2002"]);
+  const [records, setRecords] = useState<RecordsType>(recordsObj);
 
   // Handle Submit
   function handleSubmit(e: FormEvent<HTMLFormElement>)
   {
     e.preventDefault();
-
-    console.log(input);
   }
 
-  // Options Mapper
-  function optionsMapper(x: string): JSX.Element
+  // Handle Change
+  function handleChange(e: ChangeEvent<HTMLInputElement>): void
   {
-    return <Option key={ x } value={ x }> { x } </Option>;
+    setRecords((x: RecordsType) => ({ ...x, [e.target.name]: e.target.value }));
   }
 
   return (
@@ -31,29 +29,41 @@ export default function Form(): JSX.Element
         target="_self"
         encType="application/x-www-form-urlencoded"
         autoComplete="off"
-        className=" w-3/4 md:w-1/2"
+        className=" w-1/2"
         onSubmit={ handleSubmit }
       >
 
-        <div className=" my-4">
-          <Select
-            name="date"
-            label="Date"
-            placeholder="Date"
-            variant="outlined"
-            size="lg"
-            color="blue"
-            value={ input }
-            onChange={ (val: string | undefined) => setInput(val || "") }
-          >
-            { dates.map(optionsMapper) }
-          </Select>
+        <div className=" flex justify-center items-center">
+          <div className=" m-4">
+            <Input
+              name="fromDate"
+              type="date"
+              label="From Date"
+              variant="outlined"
+              size="lg"
+              color="blue"
+              value={ records.fromDate }
+              onChange={ handleChange }
+            />
+          </div>
+
+          <div className=" m-4">
+            <Input
+              name="toDate"
+              type="date"
+              label="To Date"
+              variant="outlined"
+              size="lg"
+              color="blue"
+              value={ records.toDate }
+              onChange={ handleChange }
+            />
+          </div>
         </div>
 
         <div className=" my-4 flex justify-center items-center">
           <Button
             type="submit"
-            placeholder=""
             variant="gradient"
             size="lg"
             color="blue"

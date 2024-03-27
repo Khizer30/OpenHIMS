@@ -27,11 +27,19 @@ interface AppointmentType
   patientPhone: string;
 }
 
-// JSON
-interface JSON
+// Print JSON
+interface PrintJSON
 {
   patient: PatientType;
   appointment: AppointmentType;
 }
 
-export type { Children, PatientType, AppointmentType, JSON };
+// Records Type
+interface RecordsType
+{
+  fromDate: string;
+  toDate: string;
+  appointments: AppointmentType[];
+}
+
+export type { Children, PatientType, AppointmentType, PrintJSON, RecordsType };

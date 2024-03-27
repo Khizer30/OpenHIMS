@@ -1,5 +1,5 @@
 //
-import { type PatientType, type AppointmentType } from "@lib/Interface";
+import { type PatientType, type AppointmentType, type RecordsType } from "@lib/Interface";
 
 // Patient Object
 const patientObj: PatientType =
@@ -22,8 +22,16 @@ const appointmentObj: AppointmentType =
   patientPhone: ""
 };
 
+// Records Object
+const recordsObj: RecordsType =
+{
+  fromDate: new Date().toISOString().slice(0, 10),
+  toDate: new Date().toISOString().slice(0, 10),
+  appointments: []
+};
+
 // Services
-const services: string[] = ["Consultation", "Nebulizing", "Injection", "ECG", "Acupuncture"];
+const services: string[] = ["Consultation", "Nebulizing", "Injection", "ECG", "Acupuncture", "Procedure"];
 
 // Doctors
 const doctors: string[] = ["Dr. Asad Ali Owaisi", "None"];
@@ -80,4 +88,4 @@ function validateAppointment(x: AppointmentType): boolean
   }
 }
 
-export { patientObj, appointmentObj, doctors, services, validatePatient, validateAppointment };
+export { patientObj, appointmentObj, recordsObj, doctors, services, validatePatient, validateAppointment };

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { type Metadata } from "next";
 //
 import { getAppointment } from "@lib/db";
-import { type JSON } from "@lib/Interface";
+import { type PrintJSON } from "@lib/Interface";
 import logo from "@images/clinic.webp";
 
 // Metadata
@@ -24,7 +24,7 @@ interface Params
 // Page
 export default async function Page({ params }: Params): Promise<JSX.Element>
 {
-  const data: JSON = await getAppointment(+params.id);
+  const data: PrintJSON = await getAppointment(+params.id);
 
   return (
     <>

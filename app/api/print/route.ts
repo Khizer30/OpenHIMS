@@ -2,12 +2,12 @@ import puppeteer, { type Browser, type Page } from "puppeteer";
 import { NextResponse, type NextRequest } from "next/server";
 //
 import { addAppointment } from "@lib/db";
-import { type JSON } from "@lib/Interface";
+import { type PrintJSON } from "@lib/Interface";
 
 // Print
 export async function POST(req: NextRequest): Promise<NextResponse<Blob>>
 {
-  const { patient, appointment }: JSON = await req.json();
+  const { patient, appointment }: PrintJSON = await req.json();
   const appointmentID: number = await addAppointment(patient, appointment);
 
   const browser: Browser = await puppeteer.launch();

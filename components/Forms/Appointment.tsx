@@ -42,21 +42,6 @@ export default function Form(): JSX.Element
     }
   }
 
-  // Generate PDF
-  function generatePDF(x: Blob): void
-  {
-    const pdfURL: string = URL.createObjectURL(x);
-    const pdfWindow: Window | null = window.open(pdfURL);
-
-    if (pdfWindow)
-    {
-      pdfWindow.onload = () =>
-      {
-        pdfWindow.print();
-      };
-    }
-  }
-
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement>): void
   {
@@ -80,6 +65,21 @@ export default function Form(): JSX.Element
     return (
       <Option value={ x } key={ x }> { x } </Option>
     );
+  }
+
+  // Generate PDF
+  function generatePDF(x: Blob): void
+  {
+    const pdfURL: string = URL.createObjectURL(x);
+    const pdfWindow: Window | null = window.open(pdfURL);
+
+    if (pdfWindow)
+    {
+      pdfWindow.onload = () =>
+      {
+        pdfWindow.print();
+      };
+    }
   }
 
   return (
