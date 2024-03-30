@@ -13,7 +13,7 @@ interface PatientType
   age: number;
   gender: string;
   phone: string;
-  appointments: AppointmentType[];
+  appointments?: AppointmentType[];
 }
 
 // Appointment Type

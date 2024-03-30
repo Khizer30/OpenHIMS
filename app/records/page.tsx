@@ -6,8 +6,8 @@ import Form from "@components/Forms/Records";
 // Metadata
 export const metadata: Metadata =
 {
-  title: "OpenHIMS | Patient Records",
-  keywords: ["OpenHIMS", "Patient Records"]
+  title: "OpenHIMS | Appointment Records",
+  keywords: ["OpenHIMS", "Appointment Records"]
 };
 
 // Page
@@ -17,7 +17,7 @@ export default function Page(): JSX.Element
     <>
       <Sidebar />
       <div className=" w-full p-4 flex flex-col justify-center items-center">
-        <p className=" m-4 font-primary font-medium text-center text-5xl text-grey"> Patient Records </p>
+        <p className=" m-4 font-primary font-medium text-center text-5xl text-grey"> Appointment Records </p>
         <Form />
       </div>
     </>

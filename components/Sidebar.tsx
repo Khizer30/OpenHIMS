@@ -10,7 +10,7 @@ import logo from "@images/clinic.webp";
 export default function Sidebar()
 {
   return (
-    <Card className=" h-screen max-w-[20rem] p-4 bg-blue-gray-50">
+    <Card className=" h-screen max-w-[20rem] p-4 bg-gray-100">
       <div className=" mb-4 p-4 flex justify-center items-center">
         <Image
           src={ logo }
@@ -45,7 +45,7 @@ export default function Sidebar()
             <ListItemPrefix>
               <UsersIcon className=" h-5 w-5" />
             </ListItemPrefix>
-            Patient Records
+            Appointment Records
           </ListItem>
         </Link>
 

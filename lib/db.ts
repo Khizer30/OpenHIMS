@@ -65,7 +65,7 @@ async function getAppointment(x: number): Promise<PrintJSON>
 
     if (data)
     {
-      patient = { ...data.Patient, appointments: [] };
+      patient = data.Patient;
       appointment =
       {
         id: data.id,
