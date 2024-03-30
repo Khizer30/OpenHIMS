@@ -34,12 +34,22 @@ interface PrintJSON
   appointment: AppointmentType;
 }
 
-// Records Type
-interface RecordsType
+// Dates Type
+interface DatesType
 {
   fromDate: string;
   toDate: string;
-  appointments: AppointmentType[];
 }
 
-export type { Children, PatientType, AppointmentType, PrintJSON, RecordsType };
+// Records Type
+interface RecordsType
+{
+  appointmentID: number;
+  appointmentDate: string;
+  appointmentService: string;
+  appointmentDoctor: string;
+  appointmentCharges: number;
+  patientName: string;
+}
+
+export type { Children, PatientType, AppointmentType, PrintJSON, DatesType, RecordsType };

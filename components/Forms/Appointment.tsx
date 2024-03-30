@@ -2,7 +2,7 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Input, Select, Option, Button } from "@material-tailwind/react";
 //
-import { patientObj, appointmentObj, doctors, services, validatePatient, validateAppointment } from "@lib/lib";
+import { patientObj, appointmentObj, services, doctors, validatePatient, validateAppointment } from "@lib/lib";
 import { type PatientType, type AppointmentType } from "@lib/Interface";
 
 // Form

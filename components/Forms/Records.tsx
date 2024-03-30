@@ -2,24 +2,40 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Input, Button } from "@material-tailwind/react";
 //
-import { recordsObj } from "@lib/lib";
-import { type RecordsType } from "@lib/Interface";
+import { datesObj } from "@lib/lib";
+import { type DatesType, type RecordsType } from "@lib/Interface";
 
 // Form
 export default function Form(): JSX.Element
 {
-  const [records, setRecords] = useState<RecordsType>(recordsObj);
+  const [dates, setDates] = useState<DatesType>(datesObj);
+  const [records, setRecords] = useState<RecordsType[]>([]);
 
   // Handle Submit
-  function handleSubmit(e: FormEvent<HTMLFormElement>)
+  async function handleSubmit(e: FormEvent<HTMLFormElement>)
   {
     e.preventDefault();
+
+    const res: Response = await fetch("/api/records",
+      {
+        mode: "same-origin",
+        cache: "no-cache",
+        method: "POST",
+        headers:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dates)
+      });
+
+    const response: RecordsType[] = await res.json();
+    setRecords(response);
   }
 
   // Handle Change
   function handleChange(e: ChangeEvent<HTMLInputElement>): void
   {
-    setRecords((x: RecordsType) => ({ ...x, [e.target.name]: e.target.value }));
+    setDates((x: DatesType) => ({ ...x, [e.target.name]: e.target.value }));
   }
 
   return (
@@ -42,7 +58,7 @@ export default function Form(): JSX.Element
               variant="outlined"
               size="lg"
               color="blue"
-              value={ records.fromDate }
+              value={ dates.fromDate }
               onChange={ handleChange }
             />
           </div>
@@ -55,7 +71,7 @@ export default function Form(): JSX.Element
               variant="outlined"
               size="lg"
               color="blue"
-              value={ records.toDate }
+              value={ dates.toDate }
               onChange={ handleChange }
             />
           </div>

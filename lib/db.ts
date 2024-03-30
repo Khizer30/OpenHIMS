@@ -2,7 +2,7 @@ import { type Appointment } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
 import { appointmentObj, patientObj } from "@lib/lib";
-import { type PatientType, type AppointmentType, type PrintJSON } from "@lib/Interface";
+import { type PatientType, type AppointmentType, type PrintJSON, type RecordsType } from "@lib/Interface";
 
 // Add Appointment
 async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
@@ -89,4 +89,40 @@ async function getAppointment(x: number): Promise<PrintJSON>
   return { patient, appointment };
 }
 
-export { addAppointment, getAppointment };
+// Get Records
+async function getRecords(x: string, y: string): Promise<RecordsType[]>
+{
+  let records: RecordsType[] = [];
+
+  try
+  {
+    const data = await prisma.appointment.findMany({
+      where: { date: { gte: new Date(x), lte: new Date(y) } },
+      include: { Patient: true }
+    });
+
+    for (let i: number = 0; i < data.length; i++)
+    {
+      records.push({
+        appointmentID: data[i].id,
+        appointmentDate: data[i].date.toLocaleDateString(),
+        appointmentService: data[i].service,
+        appointmentDoctor: data[i].doctor,
+        appointmentCharges: data[i].charges,
+        patientName: data[i].Patient.name
+      });
+    }
+  }
+  catch (e: unknown)
+  {
+    console.log(e);
+  }
+  finally
+  {
+    await prisma.$disconnect();
+  }
+
+  return records;
+}
+
+export { addAppointment, getAppointment, getRecords };
