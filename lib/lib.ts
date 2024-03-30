@@ -87,4 +87,19 @@ function validateAppointment(x: AppointmentType): boolean
   }
 }
 
-export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment };
+// Generate PDF
+function generatePDF(x: Blob): void
+{
+  const pdfURL: string = URL.createObjectURL(x);
+  const pdfWindow: Window | null = window.open(pdfURL);
+
+  if (pdfWindow)
+  {
+    pdfWindow.onload = () =>
+    {
+      pdfWindow.print();
+    };
+  }
+}
+
+export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment, generatePDF };

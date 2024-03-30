@@ -2,7 +2,7 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Input, Select, Option, Button } from "@material-tailwind/react";
 //
-import { patientObj, appointmentObj, services, doctors, validatePatient, validateAppointment } from "@lib/lib";
+import { patientObj, appointmentObj, services, doctors, validatePatient, validateAppointment, generatePDF } from "@lib/lib";
 import { type PatientType, type AppointmentType } from "@lib/Interface";
 
 // Form
@@ -18,7 +18,7 @@ export default function Form(): JSX.Element
 
     if (validatePatient(patient) && validateAppointment(appointment))
     {
-      const res: Response = await fetch("/api/print",
+      const res: Response = await fetch("/api/add",
         {
           mode: "same-origin",
           cache: "no-cache",
@@ -67,21 +67,6 @@ export default function Form(): JSX.Element
     );
   }
 
-  // Generate PDF
-  function generatePDF(x: Blob): void
-  {
-    const pdfURL: string = URL.createObjectURL(x);
-    const pdfWindow: Window | null = window.open(pdfURL);
-
-    if (pdfWindow)
-    {
-      pdfWindow.onload = () =>
-      {
-        pdfWindow.print();
-      };
-    }
-  }
-
   return (
     <>
       <form
@@ -100,7 +85,7 @@ export default function Form(): JSX.Element
             label="Patient's Name"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             autoFocus
             value={ patient.name }
             onChange={ handleChange }
@@ -114,7 +99,7 @@ export default function Form(): JSX.Element
             label="Patient's Age"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ patient.age || "" }
             onChange={ handleChange }
           />
@@ -126,7 +111,7 @@ export default function Form(): JSX.Element
             label="Patient's Gender"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ patient.gender }
             onChange={ (val: string | undefined) => setPatient((x: PatientType) => ({ ...x, gender: val || "" })) }
           >
@@ -142,7 +127,7 @@ export default function Form(): JSX.Element
             label="Patient's Contact No."
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ patient.phone }
             onChange={ handleChange }
           />
@@ -157,7 +142,7 @@ export default function Form(): JSX.Element
             label="Date"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ appointment.date }
             onChange={ handleChange }
           />
@@ -169,7 +154,7 @@ export default function Form(): JSX.Element
             label="Service"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ appointment.service }
             onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, service: val || "" })) }
           >
@@ -183,7 +168,7 @@ export default function Form(): JSX.Element
             label="Doctor / Referred By"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ appointment.doctor }
             onChange={ (val: string | undefined) => setAppointment((x: AppointmentType) => ({ ...x, doctor: val || "" })) }
           >
@@ -198,7 +183,7 @@ export default function Form(): JSX.Element
             label="Charges"
             variant="outlined"
             size="lg"
-            color="blue"
+            color="gray"
             value={ appointment.charges || "" }
             onChange={ handleChange }
           />
@@ -209,7 +194,7 @@ export default function Form(): JSX.Element
             type="submit"
             variant="gradient"
             size="lg"
-            color="blue"
+            color="gray"
             ripple
           >
             Submit

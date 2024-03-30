@@ -3,7 +3,7 @@ import { useState, useEffect, type FormEvent, type ChangeEvent } from "react";
 import { Input, Button } from "@material-tailwind/react";
 import { PencilSquareIcon, PrinterIcon } from "@heroicons/react/24/solid";
 //
-import { datesObj } from "@lib/lib";
+import { datesObj, generatePDF } from "@lib/lib";
 import { type DatesType, type RecordsType } from "@lib/Interface";
 
 // Form
@@ -80,6 +80,7 @@ export default function Form(): JSX.Element
         <div className=" p-2 col-span-1 flex justify-start items-center border border-l-gray-300">
           <Button
             type="button"
+            onClick={ () => print(x) }
             variant="gradient"
             size="sm"
             color="gray"
@@ -91,6 +92,25 @@ export default function Form(): JSX.Element
         </div>
       </div>
     );
+  }
+
+  // Print
+  async function print(x: RecordsType): Promise<void>
+  {
+    const res: Response = await fetch("/api/print",
+      {
+        mode: "same-origin",
+        cache: "no-cache",
+        method: "POST",
+        headers:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: x.appointmentID, name: x.patientName })
+      });
+
+    const response: Blob = await res.blob();
+    generatePDF(response);
   }
 
   return (

@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { getRecords } from "@lib/db";
 import { type DatesType, type RecordsType } from "@lib/Interface";
 
-// Print
+// Records
 export async function POST(req: NextRequest): Promise<NextResponse<RecordsType[]>>
 {
   const { fromDate, toDate }: DatesType = await req.json();
