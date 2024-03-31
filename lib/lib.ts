@@ -64,7 +64,7 @@ function checkString(y: string): boolean
 // Validate Patient
 function validatePatient(x: PatientType): boolean
 {
-  if (checkString(x.name) && checkNumber(x.age.toString()) && checkString(x.gender) && checkString(x.phone))
+  if (checkString(x.name) && checkNumber(x.age.toString()) && checkString(x.phone))
   {
     return true;
   }
@@ -77,7 +77,7 @@ function validatePatient(x: PatientType): boolean
 // Validate Appointment
 function validateAppointment(x: AppointmentType): boolean
 {
-  if (checkString(x.date) && checkString(x.service) && checkString(x.doctor) && checkNumber(x.charges.toString()))
+  if (checkNumber(x.charges.toString()))
   {
     return true;
   }
@@ -102,4 +102,12 @@ function generatePDF(x: Blob): void
   }
 }
 
-export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment, generatePDF };
+// Date String To Date
+function dateStringToDate(x: string): Date
+{
+  const [day, month, year] = x.split("/");
+
+  return new Date(+year, +month - 1, +day);
+}
+
+export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringToDate };

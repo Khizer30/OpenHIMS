@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect, type FormEvent, type ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 import { Input, Button } from "@material-tailwind/react";
 import { PencilSquareIcon, PrinterIcon } from "@heroicons/react/24/solid";
+import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
 import { datesObj, generatePDF } from "@lib/lib";
 import { type DatesType, type RecordsType } from "@lib/Interface";
@@ -11,6 +13,7 @@ export default function Form(): JSX.Element
 {
   const [dates, setDates] = useState<DatesType>(datesObj);
   const [records, setRecords] = useState<RecordsType[]>([]);
+  const router: AppRouterInstance = useRouter();
 
   // On Load
   useEffect(() =>
@@ -68,6 +71,7 @@ export default function Form(): JSX.Element
         <div className=" p-2 col-span-1 flex justify-center items-center border border-x-gray-300">
           <Button
             type="button"
+            onClick={ () => edit(x.appointmentID) }
             variant="gradient"
             size="sm"
             color="gray"
@@ -92,6 +96,12 @@ export default function Form(): JSX.Element
         </div>
       </div>
     );
+  }
+
+  // Edit
+  function edit(x: number): void
+  {
+    router.push(`/edit/${ x }`);
   }
 
   // Print
