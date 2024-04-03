@@ -1,12 +1,12 @@
-import { PrismaClient, type Patient, type Appointment } from "@prisma/client";
+import { type Appointment } from "@prisma/client";
 //
+import prisma from "@lib/prisma";
 import { appointmentObj, patientObj } from "@lib/lib";
 import { type PatientType, type AppointmentType, type PatientAppointmentType, type RecordsType } from "@lib/Interface";
 
 // Add Appointment
 async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
 {
-  const prisma = new PrismaClient();
   let appointment: Appointment | null = null;
 
   try
@@ -54,7 +54,6 @@ async function addAppointment(x: PatientType, y: AppointmentType): Promise<numbe
 // Get Appointment
 async function getAppointment(x: number): Promise<PatientAppointmentType>
 {
-  const prisma = new PrismaClient();
   let { patient, appointment }: PatientAppointmentType = { patient: patientObj, appointment: appointmentObj };
 
   try
@@ -93,7 +92,6 @@ async function getAppointment(x: number): Promise<PatientAppointmentType>
 // Get Records
 async function getRecords(x: string, y: string): Promise<RecordsType[]>
 {
-  const prisma = new PrismaClient();
   let records: RecordsType[] = [];
 
   try
@@ -131,7 +129,6 @@ async function getRecords(x: string, y: string): Promise<RecordsType[]>
 // Edit Appointment
 async function editAppointment(x: PatientType, y: AppointmentType): Promise<boolean>
 {
-  const prisma = new PrismaClient();
   let flag: boolean = true;
 
   try
@@ -173,7 +170,6 @@ async function editAppointment(x: PatientType, y: AppointmentType): Promise<bool
 // Delete Appointment
 async function deleteAppointment(x: PatientType, y: AppointmentType): Promise<boolean>
 {
-  const prisma = new PrismaClient();
   let flag: boolean = true;
 
   try
