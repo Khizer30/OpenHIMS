@@ -5,7 +5,7 @@ import { Input, Select, Option, Button } from "@material-tailwind/react";
 import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
 import { services, doctors, validatePatient, validateAppointment, dateStringFormatter } from "@lib/lib";
-import { type PatientType, type AppointmentType, type PatientAppointmentType, type EditAPI } from "@lib/Interface";
+import { type PatientType, type AppointmentType, type PatientAppointmentType, type APIResponse } from "@lib/Interface";
 
 // Form
 export default function Form(props: PatientAppointmentType): JSX.Element
@@ -36,7 +36,7 @@ export default function Form(props: PatientAppointmentType): JSX.Element
           body: JSON.stringify({ patient: patient, appointment: appointment })
         });
 
-      const response: EditAPI = await res.json();
+      const response: APIResponse = await res.json();
 
       if (response.success)
       {
@@ -77,6 +77,34 @@ export default function Form(props: PatientAppointmentType): JSX.Element
     return (
       <Option value={ x } key={ x }> { x } </Option>
     );
+  }
+
+  // Delete Appointment
+  async function deleteAppointment(): Promise<void>
+  {
+    const res: Response = await fetch("/api/delete",
+      {
+        mode: "same-origin",
+        cache: "no-cache",
+        method: "POST",
+        headers:
+        {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ patient: patient, appointment: appointment })
+      });
+
+    const response: APIResponse = await res.json();
+
+    if (response.success)
+    {
+      alert("Appointment Deleted!");
+      router.push("/records");
+    }
+    else
+    {
+      alert("Error, Please Try Later!");
+    }
   }
 
   return (
@@ -214,7 +242,7 @@ export default function Form(props: PatientAppointmentType): JSX.Element
           </Button>
           <Button
             type="button"
-            onClick={ () => undefined }
+            onClick={ deleteAppointment }
             variant="gradient"
             size="lg"
             color="gray"

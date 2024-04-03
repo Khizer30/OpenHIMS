@@ -1,4 +1,4 @@
-import { PrismaClient, type Appointment } from "@prisma/client";
+import { PrismaClient, type Patient, type Appointment } from "@prisma/client";
 //
 import { appointmentObj, patientObj } from "@lib/lib";
 import { type PatientType, type AppointmentType, type PatientAppointmentType, type RecordsType } from "@lib/Interface";
@@ -170,4 +170,41 @@ async function editAppointment(x: PatientType, y: AppointmentType): Promise<bool
   return flag;
 }
 
-export { addAppointment, getAppointment, getRecords, editAppointment };
+// Delete Appointment
+async function deleteAppointment(x: PatientType, y: AppointmentType): Promise<boolean>
+{
+  const prisma = new PrismaClient();
+  let flag: boolean = true;
+
+  try
+  {
+    await prisma.appointment.delete({
+      where: { id: y.id }
+    });
+
+    const patient = await prisma.patient.findUnique({
+      where: { phone: x.phone },
+      include: { appointments: true }
+    });
+
+    if (!patient?.appointments.length)
+    {
+      await prisma.patient.delete({
+        where: { phone: x.phone }
+      });
+    }
+  }
+  catch (e: unknown)
+  {
+    flag = false;
+    console.log(e);
+  }
+  finally
+  {
+    await prisma.$disconnect();
+  }
+
+  return flag;
+}
+
+export { addAppointment, getAppointment, getRecords, editAppointment, deleteAppointment };
