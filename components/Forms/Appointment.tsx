@@ -18,7 +18,7 @@ export default function Form(): JSX.Element
 
     if (validatePatient(patient) && validateAppointment(appointment))
     {
-      const res: Response = await fetch("/api/add",
+      const res: Response = await fetch("/api/appointment",
         {
           mode: "same-origin",
           cache: "no-cache",

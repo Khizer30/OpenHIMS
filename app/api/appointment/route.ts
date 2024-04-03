@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { addAppointment } from "@lib/db";
 import { type PrintJSON } from "@lib/Interface";
 
-// Add
+// Appointment
 export async function POST(req: NextRequest): Promise<NextResponse<Blob>>
 {
   const { patient, appointment }: PrintJSON = await req.json();

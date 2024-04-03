@@ -1,12 +1,12 @@
-import { type Appointment } from "@prisma/client";
+import { PrismaClient, type Appointment } from "@prisma/client";
 //
-import prisma from "@lib/prisma";
 import { appointmentObj, patientObj } from "@lib/lib";
 import { type PatientType, type AppointmentType, type PrintJSON, type RecordsType } from "@lib/Interface";
 
 // Add Appointment
 async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
 {
+  const prisma = new PrismaClient();
   let appointment: Appointment | null = null;
 
   try
@@ -54,6 +54,7 @@ async function addAppointment(x: PatientType, y: AppointmentType): Promise<numbe
 // Get Appointment
 async function getAppointment(x: number): Promise<PrintJSON>
 {
+  const prisma = new PrismaClient();
   let { patient, appointment }: PrintJSON = { patient: patientObj, appointment: appointmentObj };
 
   try
@@ -92,13 +93,15 @@ async function getAppointment(x: number): Promise<PrintJSON>
 // Get Records
 async function getRecords(x: string, y: string): Promise<RecordsType[]>
 {
+  const prisma = new PrismaClient();
   let records: RecordsType[] = [];
 
   try
   {
     const data = await prisma.appointment.findMany({
       where: { date: { gte: new Date(x), lte: new Date(y) } },
-      include: { Patient: true }
+      include: { Patient: true },
+      orderBy: { date: "asc" }
     });
 
     for (let i: number = 0; i < data.length; i++)
@@ -128,6 +131,7 @@ async function getRecords(x: string, y: string): Promise<RecordsType[]>
 // Edit Appointment
 async function editAppointment(x: PatientType, y: AppointmentType): Promise<boolean>
 {
+  const prisma = new PrismaClient();
   let flag: boolean = true;
 
   try
