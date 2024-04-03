@@ -27,8 +27,8 @@ interface AppointmentType
   patientPhone: string;
 }
 
-// Print JSON
-interface PrintJSON
+// Patient Appointment Type
+interface PatientAppointmentType
 {
   patient: PatientType;
   appointment: AppointmentType;
@@ -58,4 +58,4 @@ interface EditAPI
   success: boolean;
 }
 
-export type { Children, PatientType, AppointmentType, PrintJSON, DatesType, RecordsType, EditAPI };
+export type { Children, PatientType, AppointmentType, PatientAppointmentType, DatesType, RecordsType, EditAPI };

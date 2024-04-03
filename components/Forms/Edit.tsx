@@ -5,10 +5,10 @@ import { Input, Select, Option, Button } from "@material-tailwind/react";
 import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
 import { services, doctors, validatePatient, validateAppointment, dateStringFormatter } from "@lib/lib";
-import { type PatientType, type AppointmentType, type PrintJSON, type EditAPI } from "@lib/Interface";
+import { type PatientType, type AppointmentType, type PatientAppointmentType, type EditAPI } from "@lib/Interface";
 
 // Form
-export default function Form(props: PrintJSON): JSX.Element
+export default function Form(props: PatientAppointmentType): JSX.Element
 {
   const [patient, setPatient] = useState<PatientType>(props.patient);
   const [appointment, setAppointment] = useState<AppointmentType>({

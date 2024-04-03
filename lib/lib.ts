@@ -64,7 +64,7 @@ function checkString(y: string): boolean
 // Validate Patient
 function validatePatient(x: PatientType): boolean
 {
-  if (checkString(x.name) && checkNumber(x.age.toString()) && checkString(x.phone))
+  if (checkString(x.name) && checkNumber(x.age.toString()) && checkString(x.gender) && checkString(x.phone))
   {
     return true;
   }
@@ -77,7 +77,7 @@ function validatePatient(x: PatientType): boolean
 // Validate Appointment
 function validateAppointment(x: AppointmentType): boolean
 {
-  if (checkString(x.date) && checkNumber(x.charges.toString()))
+  if (checkString(x.date) && checkString(x.service) && checkString(x.doctor) && checkNumber(x.charges.toString()))
   {
     return true;
   }

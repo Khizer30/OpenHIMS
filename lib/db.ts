@@ -1,7 +1,7 @@
 import { PrismaClient, type Appointment } from "@prisma/client";
 //
 import { appointmentObj, patientObj } from "@lib/lib";
-import { type PatientType, type AppointmentType, type PrintJSON, type RecordsType } from "@lib/Interface";
+import { type PatientType, type AppointmentType, type PatientAppointmentType, type RecordsType } from "@lib/Interface";
 
 // Add Appointment
 async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
@@ -52,10 +52,10 @@ async function addAppointment(x: PatientType, y: AppointmentType): Promise<numbe
 }
 
 // Get Appointment
-async function getAppointment(x: number): Promise<PrintJSON>
+async function getAppointment(x: number): Promise<PatientAppointmentType>
 {
   const prisma = new PrismaClient();
-  let { patient, appointment }: PrintJSON = { patient: patientObj, appointment: appointmentObj };
+  let { patient, appointment }: PatientAppointmentType = { patient: patientObj, appointment: appointmentObj };
 
   try
   {
