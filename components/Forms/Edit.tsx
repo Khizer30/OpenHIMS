@@ -1,9 +1,11 @@
 "use client";
 import { useState, type FormEvent, type ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 import { Input, Select, Option, Button } from "@material-tailwind/react";
+import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
-import { services, doctors, validatePatient, validateAppointment, dateStringToDate } from "@lib/lib";
-import { type PatientType, type AppointmentType, type PrintJSON } from "@lib/Interface";
+import { services, doctors, validatePatient, validateAppointment, dateStringFormatter } from "@lib/lib";
+import { type PatientType, type AppointmentType, type PrintJSON, type EditAPI } from "@lib/Interface";
 
 // Form
 export default function Form(props: PrintJSON): JSX.Element
@@ -11,8 +13,9 @@ export default function Form(props: PrintJSON): JSX.Element
   const [patient, setPatient] = useState<PatientType>(props.patient);
   const [appointment, setAppointment] = useState<AppointmentType>({
     ...props.appointment,
-    date: dateStringToDate(props.appointment.date).toISOString().slice(0, 10)
+    date: dateStringFormatter(props.appointment.date)
   });
+  const router: AppRouterInstance = useRouter();
 
   // Handle Submit
   async function handleSubmit(e: FormEvent<HTMLFormElement>): Promise<void>
@@ -33,8 +36,17 @@ export default function Form(props: PrintJSON): JSX.Element
           body: JSON.stringify({ patient: patient, appointment: appointment })
         });
 
-      const response: string = await res.json();
-      console.log(response);
+      const response: EditAPI = await res.json();
+
+      if (response.success)
+      {
+        alert("Appointment Updated!");
+        router.push("/records");
+      }
+      else
+      {
+        alert("Error, Please Try Later!");
+      }
     }
     else
     {
@@ -190,7 +202,7 @@ export default function Form(props: PrintJSON): JSX.Element
           />
         </div>
 
-        <div className=" my-4 flex justify-center items-center">
+        <div className=" my-4 flex justify-evenly items-center">
           <Button
             type="submit"
             variant="gradient"
@@ -198,7 +210,17 @@ export default function Form(props: PrintJSON): JSX.Element
             color="gray"
             ripple
           >
-            Submit
+            Update
+          </Button>
+          <Button
+            type="button"
+            onClick={ () => undefined }
+            variant="gradient"
+            size="lg"
+            color="gray"
+            ripple
+          >
+            Delete
           </Button>
         </div>
 

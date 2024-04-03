@@ -125,4 +125,45 @@ async function getRecords(x: string, y: string): Promise<RecordsType[]>
   return records;
 }
 
-export { addAppointment, getAppointment, getRecords };
+// Edit Appointment
+async function editAppointment(x: PatientType, y: AppointmentType): Promise<boolean>
+{
+  let flag: boolean = true;
+
+  try
+  {
+    await prisma.patient.update({
+      where: { phone: x.phone },
+      data:
+      {
+        name: x.name,
+        age: +x.age,
+        gender: x.gender
+      }
+    });
+
+    await prisma.appointment.update({
+      where: { id: y.id },
+      data:
+      {
+        date: new Date(y.date),
+        service: y.service,
+        doctor: y.doctor,
+        charges: +y.charges
+      }
+    });
+  }
+  catch (e: unknown)
+  {
+    flag = false;
+    console.log(e);
+  }
+  finally
+  {
+    await prisma.$disconnect();
+  }
+
+  return flag;
+}
+
+export { addAppointment, getAppointment, getRecords, editAppointment };

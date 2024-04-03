@@ -52,4 +52,10 @@ interface RecordsType
   patientName: string;
 }
 
-export type { Children, PatientType, AppointmentType, PrintJSON, DatesType, RecordsType };
+// Edit API Interface
+interface EditAPI
+{
+  success: boolean;
+}
+
+export type { Children, PatientType, AppointmentType, PrintJSON, DatesType, RecordsType, EditAPI };

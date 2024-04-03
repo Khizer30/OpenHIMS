@@ -77,7 +77,7 @@ function validatePatient(x: PatientType): boolean
 // Validate Appointment
 function validateAppointment(x: AppointmentType): boolean
 {
-  if (checkNumber(x.charges.toString()))
+  if (checkString(x.date) && checkNumber(x.charges.toString()))
   {
     return true;
   }
@@ -102,12 +102,12 @@ function generatePDF(x: Blob): void
   }
 }
 
-// Date String To Date
-function dateStringToDate(x: string): Date
+// Date String Formatter
+function dateStringFormatter(x: string): string
 {
   const [day, month, year] = x.split("/");
 
-  return new Date(+year, +month - 1, +day);
+  return `${ year }-${ month }-${ day }`;
 }
 
-export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringToDate };
+export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringFormatter };
