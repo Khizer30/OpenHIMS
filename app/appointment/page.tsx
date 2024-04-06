@@ -17,7 +17,7 @@ export default function Page(): JSX.Element
     <>
       <Sidebar />
       <div className=" w-full p-4 flex flex-col justify-center items-center">
-        <p className=" m-4 font-primary font-medium text-center text-5xl text-grey"> New Appointment </p>
+        <h1 className=" m-4 font-primary font-medium text-center text-5xl text-grey"> New Appointment </h1>
         <Form />
       </div>
     </>

@@ -30,7 +30,7 @@ const datesObj: DatesType =
 };
 
 // Services
-const services: string[] = ["Consultation", "Nebulizing", "Injection", "ECG", "Acupuncture", "Procedure"];
+const services: string[] = ["Consultation", "ECG", "Injection", "Acupuncture", "Procedure", "Nebulizing"];
 
 // Doctors
 const doctors: string[] = ["Dr. Asad Ali Owaisi", "None"];
