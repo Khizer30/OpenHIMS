@@ -3,16 +3,21 @@ import { useState, useEffect } from "react";
 import { Chart, ArcElement, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale, type ChartData } from "chart.js";
 import { Line, Doughnut } from "react-chartjs-2";
 //
-import { dashboardObj } from "@lib/lib";
 import { type DashboardType } from "@lib/Interface";
+
+// Props
+interface Props
+{
+  dashboardData: DashboardType;
+}
 
 // ChartJS Register
 Chart.register(ArcElement, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale);
 
 // Dashboard
-export default function Dashboard(): JSX.Element
+export default function Dashboard({ dashboardData }: Props): JSX.Element
 {
-  const [dashboard, setDashboard] = useState<DashboardType>(dashboardObj);
+  const [dashboard, setDashboard] = useState<DashboardType>(dashboardData);
 
   // On Mount
   useEffect(() =>
@@ -57,7 +62,7 @@ export default function Dashboard(): JSX.Element
       {
         mode: "same-origin",
         cache: "no-cache",
-        method: "GET",
+        method: "POST",
         headers:
         {
           "Content-Type": "application/json"
