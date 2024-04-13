@@ -1,7 +1,7 @@
 import { type Appointment } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
-import { appointmentObj, patientObj, dashboardObj } from "@lib/lib";
+import { appointmentObj, patientObj, dashboardObj, dateStringFormatter } from "@lib/lib";
 import { type PatientType, type AppointmentType, type PatientAppointmentType, type RecordsType, type DashboardType } from "@lib/Interface";
 
 // Add Appointment
@@ -69,7 +69,7 @@ async function getAppointment(x: number): Promise<PatientAppointmentType>
       appointment =
       {
         id: data.id,
-        date: data.date.toLocaleDateString(),
+        date: dateStringFormatter(data.date.toISOString()),
         service: data.service,
         doctor: data.doctor,
         charges: data.charges,
@@ -106,7 +106,7 @@ async function getRecords(x: string, y: string): Promise<RecordsType[]>
     {
       records.push({
         appointmentID: data[i].id,
-        appointmentDate: data[i].date.toLocaleDateString(),
+        appointmentDate: dateStringFormatter(data[i].date.toISOString()),
         appointmentService: data[i].service,
         appointmentDoctor: data[i].doctor,
         appointmentCharges: data[i].charges,

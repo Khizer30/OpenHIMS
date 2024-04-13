@@ -114,9 +114,17 @@ function generatePDF(x: Blob): void
 // Date String Formatter
 function dateStringFormatter(x: string): string
 {
-  const [day, month, year] = x.split("/");
+  let [year, month, day] = x.split("T")[0].split("-");
 
-  return `${ year }-${ month }-${ day }`;
+  if (day)
+  {
+    return `${ day }/${ month }/${ year }`;
+  }
+  else
+  {
+    let [day, month, year] = x.split("/");
+    return `${ year }-${ month }-${ day }`;
+  }
 }
 
 export { patientObj, appointmentObj, datesObj, dashboardObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringFormatter };
