@@ -96,6 +96,19 @@ function validateAppointment(x: AppointmentType): boolean
   }
 }
 
+// Validate Dates
+function validateDates(x: DatesType): boolean
+{
+  if (checkString(x.fromDate) && checkString(x.toDate))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 // Generate PDF
 function generatePDF(x: Blob): void
 {
@@ -127,4 +140,4 @@ function dateStringFormatter(x: string): string
   }
 }
 
-export { patientObj, appointmentObj, datesObj, dashboardObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringFormatter };
+export { patientObj, appointmentObj, datesObj, dashboardObj, services, doctors, validatePatient, validateAppointment, validateDates, generatePDF, dateStringFormatter };

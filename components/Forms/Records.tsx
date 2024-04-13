@@ -5,7 +5,7 @@ import { Input, Button } from "@material-tailwind/react";
 import { PencilSquareIcon, PrinterIcon } from "@heroicons/react/24/solid";
 import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 //
-import { datesObj, generatePDF } from "@lib/lib";
+import { datesObj, validateDates, generatePDF } from "@lib/lib";
 import { type DatesType, type RecordsType } from "@lib/Interface";
 
 // Form
@@ -26,20 +26,27 @@ export default function Form(): JSX.Element
   {
     e?.preventDefault();
 
-    const res: Response = await fetch("/api/records",
-      {
-        mode: "same-origin",
-        cache: "no-cache",
-        method: "POST",
-        headers:
+    if (validateDates(dates))
+    {
+      const res: Response = await fetch("/api/records",
         {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dates)
-      });
+          mode: "same-origin",
+          cache: "no-cache",
+          method: "POST",
+          headers:
+          {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(dates)
+        });
 
-    const response: RecordsType[] = await res.json();
-    setRecords(response);
+      const response: RecordsType[] = await res.json();
+      setRecords(response);
+    }
+    else
+    {
+      alert("Please, Complete The Form!");
+    }
   }
 
   // Handle Change
