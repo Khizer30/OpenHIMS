@@ -1,5 +1,5 @@
 //
-import { type PatientType, type AppointmentType, type DatesType } from "@lib/Interface";
+import { type PatientType, type AppointmentType, type DatesType, type DashboardType } from "@lib/Interface";
 
 // Patient Object
 const patientObj: PatientType =
@@ -27,6 +27,15 @@ const datesObj: DatesType =
 {
   fromDate: new Date().toISOString().slice(0, 10),
   toDate: new Date().toISOString().slice(0, 10)
+};
+
+// Dashboard Object
+const dashboardObj: DashboardType =
+{
+  revenues: [],
+  days: [],
+  portionNames: [],
+  portionRevenues: []
 };
 
 // Services
@@ -110,4 +119,4 @@ function dateStringFormatter(x: string): string
   return `${ year }-${ month }-${ day }`;
 }
 
-export { patientObj, appointmentObj, datesObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringFormatter };
+export { patientObj, appointmentObj, datesObj, dashboardObj, services, doctors, validatePatient, validateAppointment, generatePDF, dateStringFormatter };

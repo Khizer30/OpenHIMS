@@ -1,8 +1,8 @@
 import { type Appointment } from "@prisma/client";
 //
 import prisma from "@lib/prisma";
-import { appointmentObj, patientObj } from "@lib/lib";
-import { type PatientType, type AppointmentType, type PatientAppointmentType, type RecordsType } from "@lib/Interface";
+import { appointmentObj, patientObj, dashboardObj } from "@lib/lib";
+import { type PatientType, type AppointmentType, type PatientAppointmentType, type RecordsType, type DashboardType } from "@lib/Interface";
 
 // Add Appointment
 async function addAppointment(x: PatientType, y: AppointmentType): Promise<number>
@@ -203,4 +203,88 @@ async function deleteAppointment(x: PatientType, y: AppointmentType): Promise<bo
   return flag;
 }
 
-export { addAppointment, getAppointment, getRecords, editAppointment, deleteAppointment };
+// Get Dashboard
+async function getDashboard(): Promise<DashboardType>
+{
+  let dashboard: DashboardType = dashboardObj;
+
+  try
+  {
+    const startDate: Date = new Date();
+    startDate.setDate(startDate.getDate() - 5);
+    startDate.setUTCHours(0, 0, 0, 0);
+
+    const endDate: Date = new Date();
+    endDate.setDate(endDate.getDate());
+    endDate.setUTCHours(0, 0, 0, 0);
+
+    const revenueData = await prisma.appointment.groupBy({
+      by: ["date"],
+      where:
+      {
+        date:
+        {
+          gte: startDate,
+          lte: endDate
+        }
+      },
+      _sum:
+      {
+        charges: true
+      }
+    });
+
+    const portionsData = await prisma.appointment.groupBy({
+      by: ["service"],
+      where:
+      {
+        date:
+        {
+          equals: endDate
+        }
+      },
+      _sum:
+      {
+        charges: true
+      }
+    });
+
+    // Data Processing
+    let tempRevenues: number[] = [];
+    let tempDays: string[] = [];
+    let tempPortionNames: string[] = [];
+    let tempPortionRevenues: number[] = [];
+
+    for (let i: number = 0; i < revenueData.length; i++)
+    {
+      tempRevenues.push(revenueData[i]._sum.charges || 0);
+      tempDays.push(revenueData[i].date.toDateString().split(" ")[0]);
+    }
+
+    for (let i: number = 0; i < portionsData.length; i++)
+    {
+      tempPortionNames.push(portionsData[i].service);
+      tempPortionRevenues.push(portionsData[i]._sum.charges || 0);
+    }
+
+    dashboard =
+    {
+      revenues: tempRevenues,
+      days: tempDays,
+      portionNames: tempPortionNames,
+      portionRevenues: tempPortionRevenues
+    };
+  }
+  catch (e: unknown)
+  {
+    console.log(e);
+  }
+  finally
+  {
+    await prisma.$disconnect();
+  }
+
+  return dashboard;
+}
+
+export { addAppointment, getAppointment, getRecords, editAppointment, deleteAppointment, getDashboard };

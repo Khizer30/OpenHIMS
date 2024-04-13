@@ -52,10 +52,19 @@ interface RecordsType
   patientName: string;
 }
 
-// API Response Interface
+// API Response Type
 interface APIResponse
 {
   success: boolean;
 }
 
-export type { Children, PatientType, AppointmentType, PatientAppointmentType, DatesType, RecordsType, APIResponse };
+// Dashboard Type
+interface DashboardType
+{
+  revenues: number[];
+  days: string[];
+  portionNames: string[];
+  portionRevenues: number[];
+}
+
+export type { Children, PatientType, AppointmentType, PatientAppointmentType, DatesType, RecordsType, APIResponse, DashboardType };

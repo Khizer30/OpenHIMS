@@ -15,7 +15,7 @@ export default function Form(): JSX.Element
   const [records, setRecords] = useState<RecordsType[]>([]);
   const router: AppRouterInstance = useRouter();
 
-  // On Load
+  // On Mount
   useEffect(() =>
   {
     handleSubmit();
