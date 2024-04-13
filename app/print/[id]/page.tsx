@@ -26,6 +26,17 @@ export default async function Page({ params }: Params): Promise<JSX.Element>
 {
   const data: PatientAppointmentType = await getAppointment(+params.id);
 
+  // ID Maker
+  function makeID(): string
+  {
+    const today: Date = new Date();
+    const year: string = today.getUTCFullYear().toString().slice(2, 4);
+    const month: string = (today.getMonth() + 1).toString().padStart(2, "0");
+    const id: string = params.id.padStart(4, "0");
+
+    return `${ year }${ month }${ id }`;
+  }
+
   return (
     <>
       <div className=" w-full m-4 flex flex-col justify-center items-center">
@@ -48,7 +59,7 @@ export default async function Page({ params }: Params): Promise<JSX.Element>
 
         <div className=" w-full my-2 grid grid-cols-7 text-sm text-grey">
           <h6 className=" col-span-5 font-primary font-bold"> Age: <span className=" font-secondary font-normal"> { data.patient.age } years </span> </h6>
-          <h6 className=" col-span-2 font-primary font-bold"> Appointment No: <span className=" font-secondary font-normal"> __________ </span> </h6>
+          <h6 className=" col-span-2 font-primary font-bold"> Appointment No: <span className=" font-secondary font-normal"> { makeID() } </span> </h6>
         </div>
 
         <div className=" w-full my-2 grid grid-cols-7 text-sm text-grey">
