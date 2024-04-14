@@ -3,21 +3,16 @@ import { useState, useEffect } from "react";
 import { Chart, ArcElement, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale, type ChartData } from "chart.js";
 import { Line, Doughnut } from "react-chartjs-2";
 //
+import { dashboardObj } from "@lib/lib";
 import { type DashboardType } from "@lib/Interface";
-
-// Props
-interface Props
-{
-  dashboardData: DashboardType;
-}
 
 // ChartJS Register
 Chart.register(ArcElement, Tooltip, Legend, PointElement, LineElement, CategoryScale, LinearScale);
 
 // Dashboard
-export default function Dashboard({ dashboardData }: Props): JSX.Element
+export default function Dashboard(): JSX.Element
 {
-  const [dashboard, setDashboard] = useState<DashboardType>(dashboardData);
+  const [dashboard, setDashboard] = useState<DashboardType>(dashboardObj);
 
   // On Mount
   useEffect(() =>
@@ -83,18 +78,22 @@ export default function Dashboard({ dashboardData }: Props): JSX.Element
         </div>
 
         <div className=" w-3/5 h-full mx-4 p-6 flex justify-center items-center rounded-lg shadow shadow-gray-200 bg-gray-50">
-          <Doughnut
-            data={ doughnutData }
-          />
+          { (dashboard.portionNames.length !== 0) &&
+            <Doughnut
+              data={ doughnutData }
+            />
+          }
         </div>
 
       </div>
       <div className=" my-4 h-2/5 flex justify-center items-center">
 
         <div className=" w-full h-full mx-4 p-6 flex justify-center items-center rounded-lg shadow shadow-gray-200 bg-gray-50">
-          <Line
-            data={ lineData }
-          />
+          { (dashboard.days.length !== 0) &&
+            <Line
+              data={ lineData }
+            />
+          }
         </div>
 
       </div>
