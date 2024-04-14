@@ -69,7 +69,7 @@ async function getAppointment(x: number): Promise<PatientAppointmentType>
       appointment =
       {
         id: data.id,
-        date: dateStringFormatter(data.date.toISOString()),
+        date: data.date.toLocaleDateString(),
         service: data.service,
         doctor: data.doctor,
         charges: data.charges,
@@ -106,7 +106,7 @@ async function getRecords(x: string, y: string): Promise<RecordsType[]>
     {
       records.push({
         appointmentID: data[i].id,
-        appointmentDate: dateStringFormatter(data[i].date.toISOString()),
+        appointmentDate: data[i].date.toLocaleDateString(),
         appointmentService: data[i].service,
         appointmentDoctor: data[i].doctor,
         appointmentCharges: data[i].charges,

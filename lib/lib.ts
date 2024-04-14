@@ -15,7 +15,7 @@ const patientObj: PatientType =
 const appointmentObj: AppointmentType =
 {
   id: 0,
-  date: new Date().toISOString().slice(0, 10),
+  date: dateStringFormatter(new Date().toLocaleDateString()),
   service: "",
   doctor: "",
   charges: 0,
@@ -25,8 +25,8 @@ const appointmentObj: AppointmentType =
 // Dates Object
 const datesObj: DatesType =
 {
-  fromDate: new Date().toISOString().slice(0, 10),
-  toDate: new Date().toISOString().slice(0, 10)
+  fromDate: dateStringFormatter(new Date().toLocaleDateString()),
+  toDate: dateStringFormatter(new Date().toLocaleDateString())
 };
 
 // Dashboard Object
@@ -127,17 +127,9 @@ function generatePDF(x: Blob): void
 // Date String Formatter
 function dateStringFormatter(x: string): string
 {
-  let [year, month, day] = x.split("T")[0].split("-");
+  let [day, month, year] = x.split("/");
 
-  if (day)
-  {
-    return `${ day }/${ month }/${ year }`;
-  }
-  else
-  {
-    let [day, month, year] = x.split("/");
-    return `${ year }-${ month }-${ day }`;
-  }
+  return `${ year }-${ month }-${ day }`;
 }
 
 export { patientObj, appointmentObj, datesObj, dashboardObj, services, doctors, validatePatient, validateAppointment, validateDates, generatePDF, dateStringFormatter };

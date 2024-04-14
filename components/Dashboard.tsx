@@ -68,13 +68,30 @@ export default function Dashboard(): JSX.Element
     setDashboard(response);
   }
 
+  // Today Revenue
+  function todayRevenue(): number
+  {
+    const today: string = new Date().toDateString().split(" ")[0];
+    let revenue: number = 0;
+
+    for (let i: number = 0; i < dashboard.days.length; i++)
+    {
+      if (today === dashboard.days[i])
+      {
+        revenue = dashboard.revenues[i];
+      }
+    }
+
+    return revenue;
+  }
+
   return (
     <>
       <div className=" my-4 h-2/5 flex justify-center items-center">
 
         <div className=" w-2/5 h-full mx-4 flex flex-col justify-center items-center rounded-lg shadow shadow-gray-200 bg-gray-50">
           <h1 className=" my-2 font-secondary font-semibold text-center text-3xl text-grey"> Today's Revenue </h1>
-          <h3 className=" my-2 font-secondary font-bold text-center text-5xl text-grey"> PKR { dashboard.revenues[dashboard.revenues.length - 1] || 0 } </h3>
+          <h3 className=" my-2 font-secondary font-bold text-center text-5xl text-grey"> Rs { todayRevenue() } </h3>
         </div>
 
         <div className=" w-3/5 h-full mx-4 p-6 flex justify-center items-center rounded-lg shadow shadow-gray-200 bg-gray-50">
