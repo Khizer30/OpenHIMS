@@ -8,5 +8,5 @@ To ensure the proper functioning of Puppeteer, please use Microsoft Edge instead
 Please make sure that your local date format is set to dd/mm/yyyy and your timezone is set to Pakistan Standard Time, Karachi(UTC +5).
 
 ### ENV FORMAT
-OUTDIR="C:/OpenHIMS/PDF"
+OUTDIR="C:/OpenHIMS/PDF" <br>
 URL="http://localhost:3000"
