@@ -9,7 +9,7 @@ interface Params
 }
 
 // Print
-export async function POST(req: NextRequest): Promise<NextResponse<Blob>>
+export async function POST(req: NextRequest): Promise<NextResponse<string>>
 {
   const { id, name }: Params = await req.json();
 
@@ -19,18 +19,14 @@ export async function POST(req: NextRequest): Promise<NextResponse<Blob>>
 
   await page.goto(url, { waitUntil: "networkidle0" });
   await page.emulateMediaType("screen");
-  const pdfBuffer: Buffer = await page.pdf({
+  await page.pdf({
     path: `${ process.env.OUTDIR }/${ name }.pdf`,
     margin: { top: "50px", right: "50px", bottom: "50px", left: "50px" },
     printBackground: true,
     format: "A4"
   });
-  const pdf: Blob = new Blob([pdfBuffer.buffer]);
 
   await browser.close();
 
-  const response: NextResponse<Blob> = new NextResponse(pdf);
-  response.headers.set("Content-Type", "application/pdf");
-
-  return response;
+  return NextResponse.json(url);
 }

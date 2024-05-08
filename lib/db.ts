@@ -167,42 +167,6 @@ async function editAppointment(x: PatientType, y: AppointmentType): Promise<bool
   return flag;
 }
 
-// Delete Appointment
-async function deleteAppointment(x: PatientType, y: AppointmentType): Promise<boolean>
-{
-  let flag: boolean = true;
-
-  try
-  {
-    await prisma.appointment.delete({
-      where: { id: y.id }
-    });
-
-    const patient = await prisma.patient.findUnique({
-      where: { phone: x.phone },
-      include: { appointments: true }
-    });
-
-    if (!patient?.appointments.length)
-    {
-      await prisma.patient.delete({
-        where: { phone: x.phone }
-      });
-    }
-  }
-  catch (e: unknown)
-  {
-    flag = false;
-    console.log(e);
-  }
-  finally
-  {
-    await prisma.$disconnect();
-  }
-
-  return flag;
-}
-
 // Get Dashboard
 async function getDashboard(): Promise<DashboardType>
 {
@@ -287,4 +251,4 @@ async function getDashboard(): Promise<DashboardType>
   return dashboard;
 }
 
-export { addAppointment, getAppointment, getRecords, editAppointment, deleteAppointment, getDashboard };
+export { addAppointment, getAppointment, getRecords, editAppointment, getDashboard };

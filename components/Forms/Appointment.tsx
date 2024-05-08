@@ -30,7 +30,7 @@ export default function Form(): JSX.Element
           body: JSON.stringify({ patient: patient, appointment: appointment })
         });
 
-      const response: Blob = await res.blob();
+      const response: string = await res.json() as string;
       generatePDF(response);
 
       setPatient(patientObj);

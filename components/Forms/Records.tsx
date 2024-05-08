@@ -126,7 +126,7 @@ export default function Form(): JSX.Element
         body: JSON.stringify({ id: x.appointmentID, name: x.patientName })
       });
 
-    const response: Blob = await res.blob();
+    const response: string = await res.json() as string;
     generatePDF(response);
   }
 

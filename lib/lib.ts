@@ -110,10 +110,9 @@ function validateDates(x: DatesType): boolean
 }
 
 // Generate PDF
-function generatePDF(x: Blob): void
+function generatePDF(url: string): void
 {
-  const pdfURL: string = URL.createObjectURL(x);
-  const pdfWindow: Window | null = window.open(pdfURL);
+  const pdfWindow: Window | null = window.open(url);
 
   if (pdfWindow)
   {

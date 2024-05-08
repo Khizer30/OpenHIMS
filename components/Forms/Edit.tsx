@@ -79,34 +79,6 @@ export default function Form(props: PatientAppointmentType): JSX.Element
     );
   }
 
-  // Delete Appointment
-  async function deleteAppointment(): Promise<void>
-  {
-    const res: Response = await fetch("/api/delete",
-      {
-        mode: "same-origin",
-        cache: "no-cache",
-        method: "POST",
-        headers:
-        {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ patient: patient, appointment: appointment })
-      });
-
-    const response: APIResponse = await res.json();
-
-    if (response.success)
-    {
-      alert("Appointment Deleted!");
-      router.push("/records");
-    }
-    else
-    {
-      alert("Error, Please Try Later!");
-    }
-  }
-
   return (
     <>
       <form
@@ -230,7 +202,7 @@ export default function Form(props: PatientAppointmentType): JSX.Element
           />
         </div>
 
-        <div className=" my-4 flex justify-evenly items-center">
+        <div className=" my-4 flex justify-center items-center">
           <Button
             type="submit"
             variant="gradient"
@@ -239,16 +211,6 @@ export default function Form(props: PatientAppointmentType): JSX.Element
             ripple
           >
             Update
-          </Button>
-          <Button
-            type="button"
-            onClick={ deleteAppointment }
-            variant="gradient"
-            size="lg"
-            color="gray"
-            ripple
-          >
-            Delete
           </Button>
         </div>
 
