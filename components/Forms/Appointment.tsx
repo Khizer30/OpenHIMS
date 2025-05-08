@@ -31,7 +31,8 @@ export default function Form(): JSX.Element
         });
 
       const response: string = await res.json() as string;
-      generatePDF(response);
+      const url: string = `${ process.env.NEXT_PUBLIC_URL }/print/${ response }`;
+      generatePDF(url);
 
       setPatient(patientObj);
       setAppointment(appointmentObj);

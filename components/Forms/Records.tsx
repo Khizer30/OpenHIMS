@@ -114,20 +114,8 @@ export default function Form(): JSX.Element
   // Print
   async function print(x: RecordsType): Promise<void>
   {
-    const res: Response = await fetch("/api/print",
-      {
-        mode: "same-origin",
-        cache: "no-cache",
-        method: "POST",
-        headers:
-        {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ id: x.appointmentID, name: x.patientName })
-      });
-
-    const response: string = await res.json() as string;
-    generatePDF(response);
+    const url: string = `${ process.env.NEXT_PUBLIC_URL }/print/${ x.appointmentID }`;
+    generatePDF(url);
   }
 
   return (
